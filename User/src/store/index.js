@@ -2,6 +2,7 @@
  * Vuex 전역 스토어 설정
  */
 import { createStore } from "vuex";
+import axios from "axios";
 
 const store = createStore({
   state: {

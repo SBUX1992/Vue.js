@@ -44,7 +44,7 @@ const loginProc = function () {
     .dispatch("login", user)
     .then((response) => {
       // 로그인 성공 전환
-      router.push("/jwt/loginSuccess");
+      router.push("/user2/jwt/loginSuccess");
     })
     .catch((error) => {
       // 로그인 실패

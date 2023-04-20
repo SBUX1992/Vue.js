@@ -21,7 +21,7 @@ const user = computed(() => {
 });
 const logout = () => {
   localStorage.removeItem("accessToken");
-  router.push("/jwt/loginForm");
+  router.push("/user2/jwt/loginForm");
 };
 </script>
 <style scoped></style>

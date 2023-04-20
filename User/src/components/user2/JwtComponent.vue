@@ -13,13 +13,15 @@ const router = useRouter();
 onBeforeMount(() => {
   console.log("JwtComponent onBeforeMount!!!");
   const accessToken = localStorage.getItem("accessToken");
+  console.log("accessToken : " + accessToken);
+
   store
     .dispatch("authUser", accessToken)
     .then((response) => {
-      router.push("/jwt/loginSuccess");
+      router.push("/user2/jwt/loginSuccess");
     })
     .catch((error) => {
-      router.push("/jwt/loginForm");
+      router.push("/user2/jwt/loginForm");
     });
 });
 </script>
