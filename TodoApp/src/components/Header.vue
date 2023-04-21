@@ -19,11 +19,14 @@ export default {
       console.log(newTodo.value);
 
       if (newTodo.value !== "") {
-        const inputValue = newTodo.value && newTodo.value.trim;
+        const inputValue = newTodo.value && newTodo.value.trim();
         // inputValue를 상위로 넘김
         context.emit("addTodo", inputValue);
         // 상위 > 하위 : props (직접방식)
         // 하위 > 상위 : emit (간접방식)
+
+        // 등록을 누르면 input 값이 공백으로 초기화 됨
+        newTodo.value = "";
       }
     };
 
