@@ -28,7 +28,9 @@ const store = createStore({
     // SQL에 저장된 데이터를 불러옴
     getTodos(context) {
       axios
-        .get("http://localhost:8383/todos")
+        // 배포시 주소
+        .get("http://13.124.242.15:8383/todos")
+        // .get("http://localhost:8383/todos")
         .then((response) => {
           console.log(response);
           const todos = response.data;
@@ -47,7 +49,9 @@ const store = createStore({
       };
 
       axios
-        .post("http://localhost:8383/todo", data)
+        // 배포시 주소
+        .post("http://13.124.242.15:8383/todo", data)
+        // .post("http://localhost:8383/todo", data)
         .then((response) => {
           // 등록 할때 바로바로 key를 부여하기 위해 response.data를 선언
           // controller(void > TodoVO / return vo 추가)
@@ -66,9 +70,9 @@ const store = createStore({
     // 오브젝트 타입으로 들어오기 때문에 index가 아닌 data로 변경(index : index, no: no)
     removeTodo(context, data) {
       axios
-        // 배포시
-        // .delete("http://13.124.242.15:8383/remove", {
-        .delete("http://localhost:8383/remove", {
+        // 배포시 주소
+        .delete("http://13.124.242.15:8383/remove", {
+          // .delete("http://localhost:8383/remove", {
           params: { no: data.no },
         })
         .then((response) => {
@@ -86,7 +90,9 @@ const store = createStore({
     clearTodo(context) {
       // SQL 전체삭제
       axios
-        .delete("http://localhost:8383/clear")
+        // 배포시 주소
+        .delete("http://13.124.242.15:8383/clear")
+        // .delete("http://localhost:8383/clear")
         .then((response) => {
           context.commit("CLEAR_TODO");
         })
