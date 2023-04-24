@@ -1,8 +1,10 @@
 <template>
   <li v-for="(todo, index) in todos">
     <i class="fa-sharp fa-solid fa-check"></i>
-    {{ todo }}
-    <button @click="btnDelete(index)">삭제</button>
+    {{ todo.content }}
+    <button @click="btnDelete(index, todo.no)">삭제</button>
+    <!-- 프론트엔드만 할때 -->
+    <!-- <button @click="btnDelete(index)">삭제</button> -->
   </li>
 </template>
 
@@ -18,9 +20,10 @@ export default {
 
     // 삭제
     // store에 있는 actions의 removeTodo를 index로 받아옴
-    const btnDelete = (index) => {
+    // no는 백엔드때 추가함
+    const btnDelete = (index, no) => {
       //console.log("index : " + index);
-      store.dispatch("removeTodo", index);
+      store.dispatch("removeTodo", { index, no });
     };
     return {
       todos,
