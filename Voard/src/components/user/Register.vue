@@ -241,5 +241,7 @@ const btnCheckUid = () => {
       console.log(error);
     });
 };
+
+// 비밀번호 일치 확인
 </script>
 <style scoped></style>
