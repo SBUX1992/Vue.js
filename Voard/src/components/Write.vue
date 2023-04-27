@@ -2,60 +2,92 @@
   <v-app>
     <v-app-bar>
       <v-app-bar-title>글쓰기</v-app-bar-title>
-      <p>
-        ooo님 반갑습니다
-        <v-btn>로그아웃</v-btn>
-      </p>
+      <v-btn @click="btnLogout">로그아웃</v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
-        <v-sheet max-width="800" class="mx-auto mt-10" border>
-          <v-row justify="center" align="center">
-            <v-col cols="12" sm="8" md="6">
-              <v-form>
-                <v-card class="mx-auto mt-6">
-                  <v-card-title>새 글쓰기</v-card-title>
-                  <v-card-text>
-                    <v-text-field
-                      variant="outlined"
-                      label="제목"
-                      type="text"
-                      placeholder="제목"
-                      required
-                    ></v-text-field>
-                    <v-textarea
-                      variant="outlined"
-                      label="내용"
-                      type="text"
-                      placeholder="내용"
-                      required
-                    ></v-textarea>
-                  </v-card-text>
-                </v-card>
-              </v-form>
-            </v-col>
-          </v-row>
-          <v-sheet class="text-center pt-6">
+        <v-sheet max-width="800" class="mx-auto">
+          <v-text-field
+            label="제목입력"
+            variant="outlined"
+            v-model="article.title"
+          ></v-text-field>
+          <v-textarea
+            label="내용입력"
+            variant="outlined"
+            rows="12"
+            v-model="article.content"
+          ></v-textarea>
+          <v-file-input label="파일첨부" variant="outlined"></v-file-input>
+          <v-sheet class="text-right">
             <v-btn @click="btnCancel">취소</v-btn>
-            <v-btn class="ml-2" color="primary" @click="btnWrite">등록</v-btn>
+            <v-btn color="primary" @click="btnWrite" class="ml-2">글등록</v-btn>
           </v-sheet>
         </v-sheet>
+        <!-- alert -->
+        <v-dialog v-model="dialog" width="auto">
+          <v-card>
+            <v-toolbar color="primary" title="글 등록 확인"></v-toolbar>
+            <v-card-text>작성한 글이 등록 되었습니다.</v-card-text>
+            <v-card-actions>
+              <!-- v-spacer : 한쪽으로 밀기 (위아래 넣었기 때문에 가운데로 밀림) -->
+              <v-spacer></v-spacer>
+              <v-btn color="primary" @click="btnCloseDlg">확인</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-container>
     </v-main>
-    <v-footer app theme="dark">copyright &copy;Voard v1.0</v-footer>
   </v-app>
 </template>
 
 <script setup>
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import axios from "axios";
 
 const router = useRouter();
+const userStore = useStore();
+
+const article = reactive({
+  title: null,
+  content: null,
+  uid: null,
+});
+
+// true가 되면 alert에 dialog가 출력됨
+const dialog = ref(false);
+
+const btnCloseDlg = () => {
+  dialog.value = false;
+  router.push("/list");
+};
 
 const btnCancel = () => {
   router.push("/list");
 };
+
+// 글 쓰기
 const btnWrite = () => {
-  router.push("/list");
+  const user = userStore.getters.user;
+  // article uid에 user.uid를 대입함
+  article.uid = user.uid;
+
+  axios
+    .post("http://localhost:8080/Voard/write", article)
+    .then((response) => {
+      console.log(response);
+      if (response.data > 0) {
+        dialog.value = true;
+        //router.push("/list");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  // router.push("/list");
 };
 </script>
 <style scoped></style>
