@@ -22,3 +22,9 @@ registerPlugins(app);
 app.use(router);
 app.use(userStore);
 app.mount("#app");
+
+// axios 전역설정
+// 개발용
+axios.defaults.baseURL = "http://localhost:8787";
+// 배포용
+//axios.defaults.baseURL = "http://13.124.242.15:8787";

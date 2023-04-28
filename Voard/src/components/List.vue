@@ -23,7 +23,9 @@
             <tbody>
               <tr v-for="(article, index) in state.data.articles">
                 <td class="text-center">{{ state.pageStartNum - index }}</td>
-                <td class="text-left">{{ article.title }}</td>
+                <td class="text-left" @click="viewArticle(article.id)">
+                  {{ article.title }}
+                </td>
                 <td class="text-center">{{ article.nick }}</td>
                 <td class="text-center">{{ article.hit }}</td>
                 <td class="text-center">{{ article.rdate }}</td>
@@ -82,7 +84,7 @@ const pageHandler = () => {
 
 const getArticles = (pg) => {
   axios
-    .get("http://localhost:8080/Voard/list?pg=" + pg)
+    .get("/list?pg=" + pg)
     .then((response) => {
       console.log(response);
       const data = response.data;
@@ -98,5 +100,9 @@ const getArticles = (pg) => {
 onBeforeMount(() => {
   getArticles(1);
 });
+
+const viewArticle = (id) => {
+  router.push("/view");
+};
 </script>
 <style scoped></style>

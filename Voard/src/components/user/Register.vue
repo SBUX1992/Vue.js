@@ -205,7 +205,7 @@ const btnCancel = () => {
 
 const btnRegister = () => {
   axios
-    .post("http://localhost:8080/Voard/user/register", user)
+    .post("/user/register", user)
     .then((response) => {
       console.log(response);
       router.push("/user/login");
@@ -221,7 +221,7 @@ const btnRegister = () => {
 const btnCheckUid = () => {
   loading.value = true;
   axios
-    .get("http://localhost:8080/Voard/user/countUid", {
+    .get("/user/countUid", {
       params: { uid: user.uid },
     })
     .then((response) => {
