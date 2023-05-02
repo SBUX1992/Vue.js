@@ -23,7 +23,7 @@
             <tbody>
               <tr v-for="(article, index) in state.data.articles">
                 <td class="text-center">{{ state.pageStartNum - index }}</td>
-                <td class="text-left" @click="viewArticle(article.id)">
+                <td class="text-left" @click="btnModify">
                   {{ article.title }}
                 </td>
                 <td class="text-center">{{ article.nick }}</td>
@@ -50,7 +50,6 @@
     <v-footer app theme="dark">copyright &copy;Voard v1.0</v-footer>
   </v-app>
 </template>
-
 <script setup>
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
@@ -74,6 +73,7 @@ const btnLogout = () => {
   router.push("/user/login");
 };
 
+// 글쓰기
 const btnWrite = () => {
   router.push("/write");
 };
@@ -82,9 +82,10 @@ const pageHandler = () => {
   getArticles(page.value);
 };
 
+// 페이지
 const getArticles = (pg) => {
   axios
-    .get("/list?pg=" + pg)
+    .get("http://localhost:8080/Voard/list?pg=" + pg)
     .then((response) => {
       console.log(response);
       const data = response.data;
@@ -101,7 +102,7 @@ onBeforeMount(() => {
   getArticles(1);
 });
 
-const viewArticle = (id) => {
+const btnModify = () => {
   router.push("/view");
 };
 </script>

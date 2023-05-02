@@ -5,8 +5,8 @@
     </v-app-bar>
     <v-main>
       <v-container>
-        <v-sheet max-width="800" class="mx-auto mt-16">
-          <v-card class="mb-2">
+        <v-sheet max-width="800" class="mx-auto mt-10">
+          <v-card class="mb-6">
             <v-card-item>
               <v-card-title>사이트 이용정보 입력</v-card-title>
             </v-card-item>
@@ -67,7 +67,7 @@
             </v-card-text>
           </v-card>
 
-          <v-card class="mb-2">
+          <v-card class="mb-6">
             <v-card-item>
               <v-card-title>개인정보 입력</v-card-title>
             </v-card-item>
@@ -199,34 +199,18 @@ const rsChip1 = ref(false); // 이미 사용중인 아이디 입니다
 const rsChip2 = ref(false); // 사용 가능한 아이디 입니다
 const loading = ref(false); // 로딩
 
-const btnCancel = () => {
-  router.push("/user/login");
-};
-
-const btnRegister = () => {
-  axios
-    .post("/user/register", user)
-    .then((response) => {
-      console.log(response);
-      router.push("/user/login");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  // 프론트만 할때
-  // router.push("/list");
-};
-
 // 아이디 중복확인
 const btnCheckUid = () => {
   loading.value = true;
+
   axios
-    .get("/user/countUid", {
+    .get("http://localhost:8080/Voard/user/countUid", {
       params: { uid: user.uid },
     })
     .then((response) => {
       setTimeout(() => {
         loading.value = false;
+
         if (response.data > 0) {
           rsChip1.value = true;
           rsChip2.value = false;
@@ -235,6 +219,7 @@ const btnCheckUid = () => {
           rsChip2.value = true;
         }
       }, 500);
+
       console.log(response);
     })
     .catch((error) => {
@@ -242,6 +227,20 @@ const btnCheckUid = () => {
     });
 };
 
-// 비밀번호 일치 확인
+const btnCancel = () => {
+  router.push("/user/login");
+};
+
+const btnRegister = () => {
+  axios
+    .post("http://localhost:8080/Voard/user/register", user)
+    .then((response) => {
+      console.log(response);
+      router.push("/user/login");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 </script>
 <style scoped></style>

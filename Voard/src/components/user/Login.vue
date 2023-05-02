@@ -7,7 +7,7 @@
       <v-container>
         <!-- https://vuetifyjs.com/en/components/cards/ -->
         <!-- Examples 가져옴 -->
-        <v-card class="mx-auto mt-16" max-width="400">
+        <v-card class="mx-auto mt-10" max-width="400">
           <v-card-item>
             <v-card-title>로그인</v-card-title>
           </v-card-item>
@@ -23,7 +23,6 @@
                     v-model="user.uid"
                   ></v-text-field>
                   <v-text-field
-                    type="password"
                     label="비밀번호"
                     prepend-icon="mdi-lock"
                     variant="underlined"
@@ -66,7 +65,7 @@ const user = reactive({
 
 const btnLogin = () => {
   axios
-    .post("/user/login", user)
+    .post("http://localhost:8080/Voard/user/login", user)
     .then((response) => {
       console.log(response);
 
@@ -81,9 +80,7 @@ const btnLogin = () => {
     .catch((error) => {
       console.log(error);
     });
-  // router.push("/list");
 };
-
 const btnRegister = () => {
   router.push("/user/terms");
 };

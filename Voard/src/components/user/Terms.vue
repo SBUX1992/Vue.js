@@ -68,7 +68,7 @@ const btnNext = () => {
 
 onBeforeMount(() => {
   axios
-    .get("/user/terms")
+    .get("http://localhost:8080/Voard/user/terms")
     .then((response) => {
       console.log(response);
       state.data = response.data;

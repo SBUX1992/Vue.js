@@ -24,11 +24,10 @@
             <v-btn color="primary" @click="btnWrite" class="ml-2">글등록</v-btn>
           </v-sheet>
         </v-sheet>
-        <!-- alert -->
         <v-dialog v-model="dialog" width="auto">
           <v-card>
             <v-toolbar color="primary" title="글 등록 확인"></v-toolbar>
-            <v-card-text>작성한 글이 등록 되었습니다.</v-card-text>
+            <v-card-text>작성 글이 등록 되었습니다.</v-card-text>
             <v-card-actions>
               <!-- v-spacer : 한쪽으로 밀기 (위아래 넣었기 때문에 가운데로 밀림) -->
               <v-spacer></v-spacer>
@@ -41,7 +40,6 @@
     </v-main>
   </v-app>
 </template>
-
 <script setup>
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
@@ -69,14 +67,14 @@ const btnCancel = () => {
   router.push("/list");
 };
 
-// 글 쓰기
+// 글쓰기
 const btnWrite = () => {
   const user = userStore.getters.user;
   // article uid에 user.uid를 대입함
   article.uid = user.uid;
 
   axios
-    .post("/write", article)
+    .post("http://localhost:8080/Voard/write", article)
     .then((response) => {
       console.log(response);
       if (response.data > 0) {
@@ -87,7 +85,8 @@ const btnWrite = () => {
     .catch((error) => {
       console.log(error);
     });
-  // router.push("/list");
+
+  //
 };
 </script>
 <style scoped></style>
