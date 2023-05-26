@@ -29,8 +29,8 @@ const store = createStore({
     getTodos(context) {
       axios
         // 배포시 주소
-        .get("http://13.124.242.15:8383/todos")
-        // .get("http://localhost:8383/todos")
+        // .get("http://13.124.242.15:8383/todos")
+        .get("http://localhost:8383/todos")
         .then((response) => {
           console.log(response);
           const todos = response.data;
@@ -50,8 +50,8 @@ const store = createStore({
 
       axios
         // 배포시 주소
-        .post("http://13.124.242.15:8383/todo", data)
-        // .post("http://localhost:8383/todo", data)
+        // .post("http://13.124.242.15:8383/todo", data)
+        .post("http://localhost:8383/todo", data)
         .then((response) => {
           // 등록 할때 바로바로 key를 부여하기 위해 response.data를 선언
           // controller(void > TodoVO / return vo 추가)
@@ -71,8 +71,8 @@ const store = createStore({
     removeTodo(context, data) {
       axios
         // 배포시 주소
-        .delete("http://13.124.242.15:8383/remove", {
-          // .delete("http://localhost:8383/remove", {
+        // .delete("http://13.124.242.15:8383/remove", {
+        .delete("http://localhost:8383/remove", {
           params: { no: data.no },
         })
         .then((response) => {
@@ -91,8 +91,8 @@ const store = createStore({
       // SQL 전체삭제
       axios
         // 배포시 주소
-        .delete("http://13.124.242.15:8383/clear")
-        // .delete("http://localhost:8383/clear")
+        // .delete("http://13.124.242.15:8383/clear")
+        .delete("http://localhost:8383/clear")
         .then((response) => {
           context.commit("CLEAR_TODO");
         })
